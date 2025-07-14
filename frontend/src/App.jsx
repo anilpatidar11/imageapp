@@ -5,10 +5,11 @@ import "./App.css";
 const App = () => {
   const [image, setImage] = useState(null);
   const [allImages, setAllImages] = useState([]);
-
+const url = "https://imageapp-x387.onrender.com"
   const fetchImages = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/images");
+
+      const res = await axios.get(`${url}/api/images`);
       setAllImages(res.data);
     } catch (err) {
       console.error("Error fetching images:", err.message);
@@ -30,9 +31,10 @@ const App = () => {
     formData.append("image", image);
 
     try {
-      await axios.post("http://localhost:5000/api/upload", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+    
+      await axios.post(`${url}/api/upload`, formData, {
+  headers: { "Content-Type": "multipart/form-data" },
+});
       alert("Upload successful!");
       setImage(null);
       fetchImages();
@@ -43,7 +45,7 @@ const App = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/images/${id}`);
+await axios.delete(`${url}/api/images/${id}`);
       fetchImages();
     } catch (err) {
       console.error("Delete failed:", err.message);
